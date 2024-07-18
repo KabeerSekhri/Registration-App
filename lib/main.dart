@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_registration/Create.dart';
+import 'package:flutter_registration/HomePage.dart';
 import 'package:flutter_registration/SignIn.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       home: SignIn(),
       routes: {
         "toSignIn": (context) => SignIn(),
-        "toCreate": (context) => Create()
+        "toCreate": (context) => Create(),
+        "toHome": (context) => HomePage()
       },
       debugShowCheckedModeBanner: false,
     );

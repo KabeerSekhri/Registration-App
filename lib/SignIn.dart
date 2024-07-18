@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_registration/HomePage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -17,7 +19,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.amber[600],
+        backgroundColor: Colors.grey[200],
         body: Column(
           children: [
             Row(
@@ -37,6 +39,8 @@ class _SignInState extends State<SignIn> {
                     "Create an Account",
                     style: TextStyle(color: Colors.white),
                   ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3)),
                 ),
                 SizedBox(
                   width: 10,
@@ -44,14 +48,11 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 50,
             ),
             Text(
               "Sign In",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 30,
@@ -63,7 +64,7 @@ class _SignInState extends State<SignIn> {
                   usrName = name;
                 },
                 keyboardType: TextInputType.text,
-                cursorColor: Colors.purple,
+                cursorColor: Colors.teal,
                 decoration: InputDecoration(
                   hintText: "Enter Username",
                   filled: true,
@@ -71,7 +72,7 @@ class _SignInState extends State<SignIn> {
                   contentPadding: EdgeInsets.only(left: 20, right: 20),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.purple, width: 2)),
+                      borderSide: BorderSide(color: Colors.teal, width: 2)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide.none),
@@ -88,7 +89,7 @@ class _SignInState extends State<SignIn> {
                   usrEmail = email;
                 },
                 keyboardType: TextInputType.emailAddress,
-                cursorColor: Colors.purple,
+                cursorColor: Colors.teal,
                 decoration: InputDecoration(
                   hintText: "Enter Email ID",
                   filled: true,
@@ -96,7 +97,7 @@ class _SignInState extends State<SignIn> {
                   contentPadding: EdgeInsets.only(left: 20, right: 20),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.purple, width: 2)),
+                      borderSide: BorderSide(color: Colors.teal, width: 2)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide.none),
@@ -113,7 +114,7 @@ class _SignInState extends State<SignIn> {
                   usrPwd = pwd;
                 },
                 keyboardType: TextInputType.text,
-                cursorColor: Colors.purple,
+                cursorColor: Colors.teal,
                 obscureText: visibility,
                 obscuringCharacter: "*",
                 decoration: InputDecoration(
@@ -123,7 +124,7 @@ class _SignInState extends State<SignIn> {
                   contentPadding: EdgeInsets.only(left: 20, right: 20),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.purple, width: 2)),
+                      borderSide: BorderSide(color: Colors.teal, width: 2)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide.none),
@@ -151,10 +152,41 @@ class _SignInState extends State<SignIn> {
                   setState(() {
                     validateUser = true;
                   });
-                  await authInstance.signInWithEmailAndPassword(
-                      email: usrEmail, password: usrPwd);
+                  try {
+                    await authInstance.signInWithEmailAndPassword(
+                      //sign in user with email and pwd
+                      email: usrEmail,
+                      password: usrPwd,
+                    );
+
+                    if (authInstance.currentUser != null) {
+                      //if user verified, move to homepage
+                      Navigator.pushNamed(context, "toHome");
+                      Fluttertoast.showToast(
+                        msg: "Signed In Successfully!",
+                        timeInSecForIosWeb: 2,
+                        webBgColor: "#009688",
+                        backgroundColor: Colors.teal,
+                      );
+                    }
+                  } catch (error) {
+                    Fluttertoast.showToast(
+                      //to show pop-up error
+                      msg: error.toString(),
+                      timeInSecForIosWeb: 2,
+                      webBgColor: "#c41404",
+                      backgroundColor: Colors.red,
+                    );
+                    print(error);
+                  }
                 } else {
                   validateUser = false;
+                  Fluttertoast.showToast(
+                    msg: "Enter all fields",
+                    timeInSecForIosWeb: 2,
+                    webBgColor: "#c41404",
+                    backgroundColor: Colors.red,
+                  );
                   print("enter all info");
                 }
               },
@@ -164,6 +196,8 @@ class _SignInState extends State<SignIn> {
                 "Sign In",
                 style: TextStyle(color: Colors.white),
               ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3)),
             ),
           ],
         ));
