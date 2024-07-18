@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "117914086933",
+    "project_id": "app-registration-bb3ca",
+    "storage_bucket": "app-registration-bb3ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117914086933:android:75f6ddfa60561bdc61e81c",
+        "android_client_info": {
+          "package_name": "com.kabeersekhri.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQB2vOt7e4YcZbGIBM9H1wXQcoAkERw5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
